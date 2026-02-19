@@ -1,25 +1,25 @@
 import express from 'express';
 import movieroutes from './routes/movieroutes.js';
 import {config} from 'dotenv';
+config();
 import authroutes from './routes/authroutes.js'; // Import auth routes
 
 import { disconnectDB,connectDB} from './config/db.js';
-config();
 connectDB();
 const app = express();
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:true}));  
 
 app.get('/',(req,res) =>{
     res.send('Hello World');
 })
 
-app.use('/api', movieroutes);
+app.use('/api/movie', movieroutes);
 app.use('/api/auth', authroutes); // Import and use auth routes
 
-const server = app.listen(port,() =>{
+const server = app.listen(port,"0.0.0.0",() =>{
     console.log(`Server is running on port ${port}`);
 })
 
